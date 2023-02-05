@@ -71,7 +71,7 @@ func (r *RegisterRequest) SaveRegisterData() error {
 	if err != nil {
 		return err
 	}
-	r.userid = user.Id
+	r.userid = userlogin.UserId
 	r.token = token
 	return nil
 }
