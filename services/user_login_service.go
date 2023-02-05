@@ -20,7 +20,7 @@ type LoginRequest struct {
 }
 
 
-func GetUserLoginResponse(username, password string) (*LoginResponse, error) {
+func PostUserLogin(username, password string) (*LoginResponse, error) {
 	return (&LoginRequest{username: username, password: password}).Do()
 }
 

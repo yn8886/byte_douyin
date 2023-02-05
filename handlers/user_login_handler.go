@@ -17,7 +17,7 @@ func UserLoginHandler(c *gin.Context) {
 	username := c.Query("username")
 	password := c.Query("password")
 
-	LoginResponse, err := services.GetUserLoginResponse(username, password)
+	LoginResponse, err := services.PostUserLogin(username, password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, UserLoginResponse{
 			CommonResponse: models.CommonResponse{

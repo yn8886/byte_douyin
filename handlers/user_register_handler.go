@@ -16,7 +16,7 @@ func UserRegisterHandler(c *gin.Context) {
 	username := c.Query("username")
 	val, _ := c.Get("hash_password")
 	password := val.(string)
-	registerResponse, err := services.GetUserRegisterResponse(username, password)
+	registerResponse, err := services.PostUserRegister(username, password)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, UserRegisterResponse{
 			CommonResponse: models.CommonResponse{

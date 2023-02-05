@@ -21,7 +21,7 @@ type RegisterRequest struct {
 }
 
 //注册用户并得到token和user_id
-func GetUserRegisterResponse(username, password string) (*RegisterResponse, error) {
+func PostUserRegister(username, password string) (*RegisterResponse, error) {
 	return (&RegisterRequest{username: username, password: password}).Do()
 }
 
