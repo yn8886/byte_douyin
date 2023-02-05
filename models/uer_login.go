@@ -7,10 +7,10 @@ import (
 )
 
 type UserLogin struct {
-	Id       int64  `json:"id,omitempty"`
-	UserId   int64  `json:"user_id,omitempty"`
-	UserName string `json:"username,omitempty" gorm:"user_name"` //用户名
-	Password string `json:"password,omitempty"`                  //密码
+	Id 		 int64  `gorm:"column:id"`
+	UserId   int64  `gorm:"column:user_id"`
+	UserName string `json:"username" gorm:"column:user_name"` //用户名
+	Password string `json:"password" gorm:"column:password"`  //密码
 }
 
 func (UserLogin) TableName() string {
