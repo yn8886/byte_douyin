@@ -1,14 +1,18 @@
 package models
 
-import "errors"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
 
 type User struct {
-	Id            int64      `json:"id" gorm:"id,omitempty"`
-	Name          string     `json:"name" gorm:"name,omitempty"`
+	gorm.Model
+	Name          string     `json:"name" gorm:"column:name"`
 	UserLogin     *UserLogin `json:"-" gorm:"foreignkey:UserId"`
-	FollowCount   int64      `json:"follow_count" gorm:"follow_count,omitempty"`
-	FollowerCount int64      `json:"follower_count" gorm:"follower_count,omitempty"`
-	IsFollow      bool       `json:"is_follow" gorm:"is_follow,omitempty"`
+	FollowCount   int64      `json:"follow_count" gorm:"column:follow_count"`
+	FollowerCount int64      `json:"follower_count" gorm:"column:follower_count"`
+	IsFollow      bool       `json:"is_follow" gorm:"column:is_follow"`
 }
 
 func (User) TableName() string {
