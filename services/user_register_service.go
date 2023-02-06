@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
-	"go_code/project/byte_douyin/middlewares"
 	"go_code/project/byte_douyin/models"
+	"go_code/project/byte_douyin/utils"
 	"unicode/utf8"
 )
 
@@ -24,7 +24,6 @@ type RegisterRequest struct {
 func PostUserRegister(username, password string) (*RegisterResponse, error) {
 	return (&RegisterRequest{username: username, password: password}).Do()
 }
-
 
 func (r *RegisterRequest) Do() (*RegisterResponse, error){
 	//验证用户名规范性
@@ -67,7 +66,7 @@ func (r *RegisterRequest) SaveRegisterData() error {
 		return err
 	}
 	//生成token
-	r.token, err = middlewares.GenerateToken(userlogin)
+	r.token, err = utils.GenerateToken(userlogin)
 	if err != nil {
 		return err
 	}

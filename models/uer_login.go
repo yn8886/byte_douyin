@@ -2,8 +2,6 @@ package models
 
 import (
 	"errors"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 type UserLogin struct {
@@ -23,20 +21,10 @@ func UserIsExistByUsername(username string) bool {
 	return err == nil
 }
 
-func CheckNameAndPwd(username, password string, userLogin *UserLogin) error {
+func QueryUserByUsername(username string, userLogin *UserLogin) (*UserLogin, error) {
 	if userLogin == nil {
-		return errors.New("空指针异常：*UserLogin")
+		return nil, errors.New("空指针异常：*UserLogin")
 	}
 	DB.Where("user_name=?", username).First(userLogin)
-	// 核对密码
-	if !PwdVerify(password, userLogin.Password) {
-		return errors.New("用户名或密码错误")
-	}
-	return nil
-}
-
-func PwdVerify(password, hash string) bool {
-	// 比较用户输入的明文和和数据库取出的的密码解析后是否匹配
-	err := bcrypt.CompareHashAndPassword([]byte(hash),[]byte(password))
-	return err == nil
+	return userLogin, nil
 }

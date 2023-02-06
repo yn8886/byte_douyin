@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
-	"go_code/project/byte_douyin/middlewares"
 	"go_code/project/byte_douyin/models"
+	"go_code/project/byte_douyin/utils"
 )
 
 type LoginResponse struct {
@@ -24,7 +24,6 @@ func PostUserLogin(username, password string) (*LoginResponse, error) {
 	return (&LoginRequest{username: username, password: password}).Do()
 }
 
-
 func (r *LoginRequest) Do() (*LoginResponse, error) {
 	//从数据库中查询用户
 	if ! models.UserIsExistByUsername(r.username) {
@@ -41,12 +40,12 @@ func (r *LoginRequest) Do() (*LoginResponse, error) {
 func (r *LoginRequest) QueryLoginData() error {
 	userLogin := models.UserLogin{}
 	//验证用户名和密码
-	err := models.CheckNameAndPwd(r.username, r.password, &userLogin)
+	err := utils.PwdVerify(r.username, r.password, &userLogin)
 	if err != nil {
 		return err
 	}
 	//生成token
-	r.token, err = middlewares.GenerateToken(userLogin)
+	r.token, err = utils.GenerateToken(userLogin)
 	if err != nil {
 		return err
 	}
