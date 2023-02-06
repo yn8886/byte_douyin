@@ -4,7 +4,7 @@ import (
 	"errors"
 	"go_code/project/byte_douyin/models"
 	"net/http"
-	"regexp"
+	"unicode/utf8"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -21,8 +21,8 @@ func PwdHash(password string) (string, error) {
 func PwdHashMiddleWare() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		password := c.Query("password")
-		//检验密码是否规范
-		if regexp.MustCompile(`^.{6,32}$`).FindString(password) == "" {
+		//验证密码规范性
+		if utf8.RuneCountInString(password) > 32 {
 			c.JSON(http.StatusBadRequest, models.CommonResponse{
 				StatusCode: 500,
 				StatusMsg: errors.New("密码长度超出限制").Error(),
