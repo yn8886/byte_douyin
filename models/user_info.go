@@ -8,11 +8,11 @@ import (
 
 type User struct {
 	gorm.Model
-	Name          string     `json:"name" gorm:"column:name"`
+	Name          string     `json:"name" gorm:"name"`
 	UserLogin     *UserLogin `json:"-" gorm:"foreignkey:UserId"`
-	FollowCount   int64      `json:"follow_count" gorm:"column:follow_count"`
-	FollowerCount int64      `json:"follower_count" gorm:"column:follower_count"`
-	IsFollow      bool       `json:"is_follow" gorm:"column:is_follow"`
+	FollowCount   int64      `json:"follow_count" gorm:"follow_count"`
+	FollowerCount int64      `json:"follower_count" gorm:"follower_count"`
+	IsFollow      bool       `json:"is_follow" gorm:"is_follow"`
 }
 
 func (User) TableName() string {

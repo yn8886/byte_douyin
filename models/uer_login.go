@@ -7,10 +7,10 @@ import (
 )
 
 type UserLogin struct {
-	Id 		 int64  `gorm:"column:id"`
-	UserId   int64  `gorm:"column:user_id"`
-	UserName string `json:"username" gorm:"column:user_name"` //用户名
-	Password string `json:"password" gorm:"column:password"`  //密码
+	Id 		 int64  `gorm:"id"`
+	UserId   int64  `gorm:"user_id"`
+	UserName string `json:"username" gorm:"user_name"` //用户名
+	Password string `json:"password" gorm:"password"`  //密码
 }
 
 func (UserLogin) TableName() string {
@@ -28,7 +28,7 @@ func CheckNameAndPwd(username, password string, userLogin *UserLogin) error {
 		return errors.New("空指针异常：*UserLogin")
 	}
 	DB.Where("user_name=?", username).First(userLogin)
-	// 验证
+	// 核对密码
 	if !PwdVerify(password, userLogin.Password) {
 		return errors.New("用户名或密码错误")
 	}
